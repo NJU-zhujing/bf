@@ -18,8 +18,6 @@ public class LoginFrame extends JFrame{
 	JLabel password;
 	JButton cancel;
 	JButton ok;
-	
-	JRadioButton saveIdAndP;
 	public LoginFrame(){
 		super("BF Login");
 		textField=new JTextField(10);
@@ -78,9 +76,6 @@ public class LoginFrame extends JFrame{
 				
 			}
 		});
-		
-		//记住账户和密码,未完成
-		 saveIdAndP=new JRadioButton("save password");
 		
 		background.add(textField);
 		background.add(passwordField);

@@ -26,4 +26,5 @@ public class RemoteHelper {
 	public UserService getUserService(){
 		return (UserService)remote;
 	}
+	
 }
