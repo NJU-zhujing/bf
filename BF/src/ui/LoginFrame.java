@@ -99,16 +99,19 @@ public class LoginFrame extends JFrame{
 		this.setVisible(true);
 		this.setResizable(false);
 	}
+	
 	public static void main(String[] args) {
 		new LoginFrame();
 	}
+	
 }
 class backGroundPanel extends JPanel{
 	//486 407
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		Image img=new ImageIcon(this.getClass().getResource("bg.png")).getImage();
+		String help="bg"+String.valueOf(MainFrame.bgNum%4)+".png";	
+		Image img=new ImageIcon(this.getClass().getResource(help)).getImage();
 		g.drawImage(img, 0, 0, this.getWidth(),this.getHeight(),this);
 		
 	}

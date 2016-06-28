@@ -23,6 +23,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.naming.TimeLimitExceededException;
+import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -70,16 +71,19 @@ public class MainFrame extends JFrame {
 	//打开和单选菜单
 	ButtonGroup group=new ButtonGroup();
 	JMenuItem openMenuItem;
-	JMenu versionMenu;
-//	当前版本
+	JMenu recordMenu;
+	//版本控制
 	String version;
 	int versionNum;
 	String fileName=new String();
+	//换皮肤
+	static int bgNum=2;
+	background bg=new background();		
+	
 	
 	public MainFrame() {
 		// 创建窗体
 		super("BF Client");
-		background bg=new background();		
 		bg.setLayout(new BorderLayout());
 		
 		codeArray.add("请在此输入BF代码...");
@@ -91,8 +95,22 @@ public class MainFrame extends JFrame {
 		menuBar.add(editMenu);
 		JMenu accountMenu=new JMenu("Account");
 		menuBar.add(accountMenu);
-		versionMenu=new JMenu("Version");
-		menuBar.add(versionMenu);
+		recordMenu=new JMenu("Record");
+		menuBar.add(recordMenu);
+		JMenu menuHelper=new JMenu("                                                                                                      ");
+		menuHelper.setEnabled(false);
+		menuBar.add(menuHelper);
+		
+		JMenu helpMenu=new JMenu("Help");
+		menuBar.add(helpMenu);
+		
+		JMenuItem textMenuItem=new JMenuItem("说明");
+		JMenuItem adviceMenuItem=new JMenuItem("反馈");
+		helpMenu.add(textMenuItem);
+		helpMenu.add(adviceMenuItem);
+		textMenuItem.addActionListener(new MenuItemActionListener());
+		adviceMenuItem.addActionListener(new MenuItemActionListener());
+		
 		JMenuItem newMenuItem = new JMenuItem("New");
 		newMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl 1"));
 		
@@ -149,14 +167,22 @@ public class MainFrame extends JFrame {
 		redoMenuItem.addActionListener(new RedoActionListener());
 		this.setJMenuBar(menuBar);
 		
-		//
+		//popupMenu
+		
 		JPopupMenu popup=new JPopupMenu();
 		JMenuItem runMenuItem1=new JMenuItem("Run");
 		JMenuItem undoMenuItem1=new JMenuItem("Undo");
 		JMenuItem redoMenuItem1=new JMenuItem("Redo");
+		JMenuItem changeBackground=new JMenuItem("Change");
+		runMenuItem1.addActionListener(new MenuItemActionListener());
+		undoMenuItem1.addActionListener(new UndoActionListener());
+		redoMenuItem1.addActionListener(new RedoActionListener());
+		changeBackground.addActionListener(new ChangeActionListener());
 		popup.add(runMenuItem1);
 		popup.add(undoMenuItem1);
 		popup.add(redoMenuItem1);
+		popup.add(changeBackground);
+	
 		
 		//timeline
 		JPanel nouthPanel=new JPanel();
@@ -213,7 +239,7 @@ public class MainFrame extends JFrame {
 					e1.printStackTrace();
 				}
 			
-					}
+				}
 			}
 			}
 			
@@ -226,10 +252,11 @@ public class MainFrame extends JFrame {
 		
 		textArea = new JTextArea();
 		textArea.setMargin(new Insets(10, 10, 10, 10));
-		textArea.setFont(new Font("华文仿宋",Font.ITALIC,24));
-		textArea.setText("请在此输入BF代码...");
-		textArea.addMouseListener(new MyMouseListener("请在此输入BF代码..."));
 		textArea.setForeground(Color.green);
+		textArea.setFont(new Font("",Font.PLAIN,24));
+		textArea.setText("请在此输入BF代码...");
+		
+		textArea.addMouseListener(new MyMouseListener("请在此输入BF代码..."));
 		textArea.addKeyListener(new KeyListener() {
 			
 			
@@ -251,7 +278,6 @@ public class MainFrame extends JFrame {
 					undoTime=0;
 					pointer=0;
 					String help=codeArray.get(codeArray.size()-2);
-					System.out.println(pointer);
 					codeArray=new ArrayList<>();
 					codeArray.add(help);
 				}
@@ -268,7 +294,7 @@ public class MainFrame extends JFrame {
 		textArea.setOpaque(false);
 		bg.add(jsp, BorderLayout.CENTER);
 		
-		// 显示输入和结果
+		//inputTextArea and resultTextArea
 		resultTextArea = new JTextArea();
 		resultTextArea.setFont(new Font("", Font.ITALIC, 28));
 		resultTextArea.setForeground(Color.RED);
@@ -305,6 +331,7 @@ public class MainFrame extends JFrame {
 		this.setVisible(true);
 		
 	}
+	
 	class MyMouseListener  implements MouseListener{
 
 		String help;
@@ -348,6 +375,7 @@ public class MainFrame extends JFrame {
 		}
 	
 }
+	
 	class RadioButtomListener implements ActionListener{
 
 		@Override
@@ -379,7 +407,6 @@ public class MainFrame extends JFrame {
 	}
 	}
 	
-	
 	class MenuItemActionListener implements ActionListener {
 		/**
 		 * 子菜单响应事件
@@ -395,7 +422,7 @@ public class MainFrame extends JFrame {
 							JRadioButtonMenuItem jrbm=new JRadioButtonMenuItem(help[i]);
 							jrbm.setSelected(false);
 							group.add(jrbm);
-							versionMenu.add(jrbm);
+							recordMenu.add(jrbm);
 							jrbm.addActionListener(new RadioButtomListener());
 						}
 						
@@ -438,10 +465,15 @@ public class MainFrame extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}else if(cmd.equals("说明")){
+				JOptionPane.showMessageDialog(null,  "暂无","说明",JOptionPane.PLAIN_MESSAGE);
+				
+			}else if(cmd.equals("反馈")){
+				JOptionPane.showMessageDialog(null,  "官方客服QQ:\n"+"916110197","反馈",JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 	}
-	
+	//文本域监听
 	class MyDocumentListener implements DocumentListener{
 
 		@Override
@@ -469,6 +501,7 @@ public class MainFrame extends JFrame {
 			try{
 			if(undoOrRedoFlag){				
 				pointer++;
+				System.out.println(pointer+" remove");
 				codeArray.add(textArea.getText());
 //				System.out.println("- "+pointer);
 			}
@@ -488,6 +521,18 @@ public class MainFrame extends JFrame {
 		}
 		
 	}
+	//换背景
+	class ChangeActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			bgNum++;
+			bg.repaint();
+		}
+		
+	}
+	
 	class SaveActionListener implements ActionListener {
 
 		@Override
@@ -563,7 +608,8 @@ class background extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		Image img=new ImageIcon(this.getClass().getResource("background.png")).getImage();
+		String help="background"+String.valueOf(MainFrame.bgNum%4)+".png";	
+		Image img=new ImageIcon(this.getClass().getResource(help)).getImage();
 		g.drawImage(img, 0, 0, this.getWidth(),this.getHeight(),this);
 		
 	}
