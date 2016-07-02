@@ -1,1 +1,14 @@
-BF编译器使用说明
+New-新建
+Open-使Record出现已️登陆用户文件列表
+Save-保存，出现输入框，用于输入文件名
+Exit-退出编译器
+Run-代码执行
+Undo-撤销
+Redo-重做
+Login-登陆，出现登陆界面，首次登陆即注册
+Out-登出
+Record-显示用户所存文件记录
+Timeline-时间轴，用于单文件4版本回退
+CodeArea-代码输入
+InputArea-操作数输入
+ResultArea-结果输出

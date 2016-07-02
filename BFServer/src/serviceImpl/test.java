@@ -44,7 +44,7 @@ public class test {
 //		bw.write("aaaaa");
 //		bw.flush();
 //		bw.close();
-//		File file=new File("user_fileList");
+		File file=new File("user_fileList");
 //		int flag=0;
 //		
 //			String name="admin_code";
@@ -60,7 +60,8 @@ public class test {
 //			}
 //			br.close();
 //			fr.close();
-			
+//			System.out.println(aaaa);
+//			
 //			if(flag!=1){
 //				bw.newLine();
 //				bw.write(name);
@@ -68,24 +69,9 @@ public class test {
 //			bw.flush();
 //			bw.close();
 //			fw0.close();
-//		String fileName="code_1";
-//		int index=fileName.indexOf("_");
-//		int num=0;
-//			String result=new String();
-//			if(index!=-1){
-//				num=Integer.parseInt(fileName.substring(fileName.length()-1));
-////				System.out.println(num);
-//				fileName=fileName.substring(0,index);
-////				System.out.println(fileName);
-//			}
-//			FileReader file = new FileReader("admin" + "_" +fileName);
-//			BufferedReader br=new BufferedReader(file);
-//			System.out.println(br.readLine());
-//			br.close();
-//			file.close();
-		
-		IOServiceImpl help=new IOServiceImpl();
-//		System.out.println(help.readFile("admin", "code_1"));
-		help.writeFile("cccc", "admin", "code");
+		String l="abcd";
+		System.out.println(l.length());
+		System.out.println(l.substring(0, l.length()-1));
+
 	}
 }

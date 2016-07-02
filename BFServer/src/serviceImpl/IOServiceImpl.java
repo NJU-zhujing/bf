@@ -46,12 +46,29 @@ public class IOServiceImpl implements IOService{
 		bw0.close();
 		fw0.close();
 		
+		String saveHelp = new String();
 		File f = new File(name);
 		try {
 			FileWriter fw = new FileWriter(f, true);
 			BufferedWriter bw=new BufferedWriter(fw);
+			FileReader Fr=new FileReader(f);
+			BufferedReader Br=new BufferedReader(Fr);
+			String help2=Br.readLine();
+			while(help2!=null){
+				saveHelp=help2;
+				help2=Br.readLine();
+			}
+			
+			if(saveHelp.equals(file0)){
+				
+			}else{
+			
+			
 			bw.newLine();
-			bw.write(file0);			
+			bw.write(file0);
+			}
+			Br.close();
+			Fr.close();
 			bw.flush();
 			bw.close();
 			fw.close();
@@ -96,6 +113,7 @@ public class IOServiceImpl implements IOService{
 			try{
 				if(readHelp.size()>2){
 					result=readHelp.get(readHelp.size()-num-1);	 
+
 				}else{
 					result=readHelp.get(0);				
 				}
@@ -137,8 +155,9 @@ public class IOServiceImpl implements IOService{
 	@Override
 	public String run(String code, String parm) throws RemoteException {
 		// TODO Auto-generated method stub
-		ExecuteServiceImpl help=new ExecuteServiceImpl();
+		ExecuteServiceImpl help=new ExecuteServiceImpl();	
 		return help.execute(code, parm);
 	}
+	
 
 }
